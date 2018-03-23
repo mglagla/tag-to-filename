@@ -4,3 +4,6 @@ version = "0.1.0"
 authors = ["Martin Glagla <martingl@gmx.de>"]
 
 [dependencies]
+mp3-metadata = "0.3"
+structopt = "0.2"
+glob = "0.2.11"
