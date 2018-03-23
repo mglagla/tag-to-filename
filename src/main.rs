@@ -86,7 +86,7 @@ fn rename_file(file: &Path, _template: &str) -> bool {
             }
         })
         .map(|(title, num)| if let Some(pos) = num.find('/') {
-            let total = *&num[(pos+1)..]
+            let total = num[(pos+1)..]
                 .trim_matches(|c: char| !c.is_digit(10));
             
             let num = num[..pos].trim_matches(|c: char| !c.is_digit(10));
