@@ -68,34 +68,38 @@ fn iterate(Options {template, files}: Options) {
 
 fn rename_file(file: &Path, _template: &str) -> bool {
     read_from_file(file).ok()
-        .map(|meta| (meta.tag, meta.optional_info))
-        .and_then(|(tag, opts)| {
-            let n = opts.into_iter()
-                .filter_map(|opt| opt.track_number)
+        .map(|meta| meta.optional_info)
+        .and_then(|opts| {
+            let t_n = opts.into_iter()
+                .filter_map(|opt| if let (Some(t), Some(n)) = (opt.title, opt.track_number) {
+                    Some((t, n))
+                } else {
+                    None
+                })
                 .next();
 
-            if let (Some(tag), Some(n)) = (tag, n) {
+            if let Some((tag, n)) = t_n {
                 Some((tag, n))
             } else {
                 None
             }
         })
-        .map(|(tag, num)| if let Some(pos) = num.find('/') {
+        .map(|(title, num)| if let Some(pos) = num.find('/') {
             let total = *&num[(pos+1)..]
                 .trim_matches(|c: char| !c.is_digit(10));
             
             let num = num[..pos].trim_matches(|c: char| !c.is_digit(10));
 
-            (tag, "0".repeat(total.len() - num.len()) + num)
+            (title, "0".repeat(total.len() - num.len()) + num)
         } else {
-            (tag, num)
+            (title, num)
         })
-        .map(|(tag, num)| rename(
+        .map(|(title, num)| rename(
             file, 
             format!(
                 "{} - {}.mp3", 
                 num, 
-                tag.title.trim_matches(char::is_control)
+                title.trim_matches(char::is_control).trim()
             )
         ).is_ok())
         .unwrap_or(false)
