@@ -18,6 +18,7 @@ struct Options {
     files: Vec<PathBuf>
 }
 
+//TODO: Rename into same dir
 fn main() {
     let options = Options::from_args();
     
