@@ -1,0 +1,6 @@
+[package]
+name = "tag-to-filename"
+version = "0.1.0"
+authors = ["Martin Glagla <martingl@gmx.de>"]
+
+[dependencies]
