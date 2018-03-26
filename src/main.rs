@@ -2,6 +2,8 @@ extern crate mp3_metadata;
 #[macro_use] extern crate structopt;
 extern crate glob;
 
+mod template;
+
 use std::path::{Path, PathBuf};
 use std::fs::rename;
 
@@ -22,7 +24,7 @@ struct Options {
 fn main() {
     let options = Options::from_args();
     
-    if options.files.len() == 0 {
+    if options.files.is_empty() {
         println!("Must submit file!");
         return;
     } else {
