@@ -43,6 +43,19 @@ impl<'a> ToString for Template<'a> {
     }
 }
 
+macro_rules! replace_template {
+    ( $( $x:ident ),* ) => (
+        $(
+            fn $x<S: Into<CowStr>>(self, $x: S) -> Self {
+                Template {
+                    $x: $x.into(),
+                    ..self
+                }
+            }
+        )*
+    );
+}
+
 impl<'a> Template<'a> {
     fn with_template(template: &'a str) -> Template<'a> {
         Template {
@@ -51,54 +64,7 @@ impl<'a> Template<'a> {
         }
     }
 
-    fn title<S: Into<CowStr>>(self, title: S) -> Self {
-        Template {
-            title: title.into(),
-            ..self
-        }
-    }
-
-    fn artist<S: Into<CowStr>>(self, artist: S) -> Self {
-        Template {
-            artist: artist.into(),
-            ..self
-        }
-    }
-
-    fn album<S: Into<CowStr>>(self, album: S) -> Self {
-        Template {
-            album: album.into(),
-            ..self
-        }
-    }
-
-    fn comment<S: Into<CowStr>>(self, comment: S) -> Self {
-        Template {
-            comment: comment.into(),
-            ..self
-        }
-    }
-
-    fn genre<S: Into<CowStr>>(self, genre: S) -> Self {
-        Template {
-            genre: genre.into(),
-            ..self
-        }
-    }
-
-    fn year<S: Into<CowStr>>(self, year: S) -> Self {
-        Template {
-            year: year.into(),
-            ..self
-        }
-    }
-
-    fn track_number<S: Into<CowStr>>(self, track_number: S) -> Self {
-        Template {
-            track_number: track_number.into(),
-            ..self
-        }
-    }
+    replace_template!(title, artist, album, comment, genre, year, track_number);
 }
 
 #[cfg(test)]
