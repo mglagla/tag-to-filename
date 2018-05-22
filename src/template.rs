@@ -16,16 +16,15 @@ struct Template<'a> {
 
 impl Default for Template<'static> {
     fn default() -> Self {
-        let def = CowStr::default();
         Template {
             template: "%n - %t.mp3",
-            title: def.clone(),
-            artist: def.clone(),
-            album: def.clone(),
-            comment: def.clone(),
-            genre: def.clone(),
-            year: def.clone(),
-            track_number: def,
+            title: Default::default(),
+            artist: Default::default(),
+            album: Default::default(),
+            comment: Default::default(),
+            genre: Default::default(),
+            year: Default::default(),
+            track_number: Default::default(),
         }
     }
 }
