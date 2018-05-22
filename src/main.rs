@@ -4,8 +4,10 @@ extern crate glob;
 
 mod template;
 
-use std::path::{Path, PathBuf};
-use std::fs::rename;
+use std::{
+    fs::rename,
+    path::{Path, PathBuf},
+};
 
 use structopt::StructOpt;
 
